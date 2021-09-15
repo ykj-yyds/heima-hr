@@ -1,24 +1,21 @@
 import request from '@/utils/request'
 
+/**
+ * @description: 登录
+ * @param {*} data {modile, password}
+ * @return {*}
+ */
 export function login(data) {
   return request({
-    url: '/vue-admin-template/user/login',
+    url: 'api/sys/login',
     method: 'post',
     data
   })
 }
-
 export function getInfo(token) {
-  return request({
-    url: '/vue-admin-template/user/info',
-    method: 'get',
-    params: { token }
-  })
+
 }
 
 export function logout() {
-  return request({
-    url: '/vue-admin-template/user/logout',
-    method: 'post'
-  })
+
 }

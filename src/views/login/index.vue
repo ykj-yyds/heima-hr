@@ -11,7 +11,7 @@
       <!-- 放置标题图片 @是设置的别名-->
       <div class="title-container">
         <h3 class="title">
-          <img src="@/assets/common/login-logo.png" alt="" />
+          <img src="@/assets/common/login-logo.png" alt="">
         </h3>
       </div>
 
@@ -58,8 +58,7 @@
         type="primary"
         style="width: 100%; margin-bottom: 30px"
         @click.native.prevent="handleLogin"
-        >Login</el-button
-      >
+      >Login</el-button>
 
       <div class="tips">
         <span style="margin-right: 20px">账号: 13800000002</span>
@@ -70,80 +69,85 @@
 </template>
 
 <script>
-import { validmobile } from "@/utils/validate";
-// 导入login方法
-import { login } from "@/api/user";
+import { validmobile } from '@/utils/validate'
+import { mapMutations, mapActions } from 'vuex'
 export default {
-  name: "Login",
+  name: 'Login',
   data() {
     const validateMobile = (rule, value, callback) => {
       if (!validmobile(value)) {
-        callback(new Error("Please enter the correct user name"));
+        callback(new Error('Please enter the correct user name'))
       } else {
-        callback();
+        callback()
       }
-    };
+    }
 
     return {
       loginForm: {
-        mobile: "13800000002",
-        password: "123456",
+        mobile: '13800000002',
+        password: '123456'
       },
       loginRules: {
         mobile: [
-          { required: true, trigger: "blur", validator: validateMobile },
+          { required: true, trigger: 'blur', validator: validateMobile }
         ],
         password: [
-          { required: true, trigger: "blur", message: "密码不能为空" },
+          { required: true, trigger: 'blur', message: '密码不能为空' },
           {
             min: 6,
             max: 16,
-            message: "密码的长度在6-16位之间 ",
-            trigger: "blur",
-          },
-        ],
+            message: '密码的长度在6-16位之间 ',
+            trigger: 'blur'
+          }
+        ]
       },
       loading: false,
-      passwordType: "password",
-      redirect: undefined,
-    };
+      passwordType: 'password',
+      redirect: undefined
+    }
   },
   watch: {
     $route: {
-      handler: function (route) {
-        this.redirect = route.query && route.query.redirect;
+      handler: function(route) {
+        this.redirect = route.query && route.query.redirect
       },
-      immediate: true,
-    },
+      immediate: true
+    }
   },
   methods: {
+    ...mapActions('user', ['userLogin']),
+    ...mapMutations('user', ['setToken']),
     showPwd() {
-      if (this.passwordType === "password") {
-        this.passwordType = "";
+      if (this.passwordType === 'password') {
+        this.passwordType = ''
       } else {
-        this.passwordType = "password";
+        this.passwordType = 'password'
       }
       this.$nextTick(() => {
-        this.$refs.password.focus();
-      });
+        this.$refs.password.focus()
+      })
     },
     handleLogin() {
       // 兜底校验
-      this.$refs.loginForm.validate(async (valid) => {
+      this.$refs.loginForm.validate(async(valid) => {
         // 验证校验结果
-        if (!valid) return 
+        if (!valid) return
         // 实现登录请求
-        try {
-          // 发起登录请求
-          const res = await login(this.loginForm);
-          console.log( res.data);
-        } catch (err) {
-        this.$message.error(err.message)  
-        }
-      });
-    },
-  },
-};
+        // 发起登录请求
+        // const res = await login(this.loginForm)
+        // console.log(res.data)
+        // this.setToken(res.data)
+        // 请求之前让loading展示
+        this.loading = true
+        await this.userLogin(this.loginForm)
+        // 请求完成把loading置为原始值
+        this.loading = false
+        // 登录完成 看是否有拼接的路径如果有就跳转之前 如果没有就跳转主页
+        this.$router.push(this.$route.query.returnUrl || '/')
+      })
+    }
+  }
+}
 </script>
 
 <style lang="scss">

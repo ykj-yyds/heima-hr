@@ -1,3 +1,45 @@
+import router from '@/router'
+import store from '@/store'
+import NProgress from 'nprogress' // 进度条插件
+import 'nprogress/nprogress.css' // 进度条插件 style
+// 不需要token的白名单
+const whiteList = ['/login', '/404']
+
+// 路由前置守卫
+router.beforeEach(async(to, from, next) => {
+  // 获取token
+  const token = store.state.user.token
+  // 开启进度条
+  NProgress.start()
+  // 判断是否有token
+  if (token) {
+    // 如果有token去的是登录页跳转到主页
+    if (to.path === '/login') {
+      next('/')
+    } else {
+      // 在路由跳转前获取用户信息 在这里获取是为了之后权限管理做铺垫
+      await store.dispatch('user/getUserInfo')
+      // 如果去的是别的页面直接放行
+      next()
+    }
+  } else {
+    // 如果没有token 去的是白名单也直接放行
+    if (whiteList.includes(to.path)) {
+      next()
+    } else {
+      // 如果去的不是白名单就直接跳转的登录页面
+      next('/login')
+    }
+  }
+  // 关闭进度条
+  NProgress.done()
+})
+
+// 路由后置守卫
+router.afterEach((to, from) => {
+  // 关闭进度条
+  NProgress.done()
+})
 // import router from './router'
 // import store from './store'
 // import { Message } from 'element-ui'

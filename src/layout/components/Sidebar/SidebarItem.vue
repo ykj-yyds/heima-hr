@@ -1,13 +1,22 @@
 <template>
+  <!-- 判断路由对象中是否存在 hidden 属性 -->
+  <!-- 根据 hidden 属性 决定是否把路由渲染到左侧菜单 -->
   <div v-if="!item.hidden">
+    <!-- 判断 item 是否存在 children 属性，如果不存在，直接渲染 el-menu-item -->
     <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
+
       <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
+        <!-- el-menu-item 二级菜单 -->
+        <!-- index 跳转的路径 -->
         <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}">
+          <!-- icon: 图标 -->
+          <!-- title：标题文件 -->
           <item :icon="onlyOneChild.meta.icon||(item.meta&&item.meta.icon)" :title="onlyOneChild.meta.title" />
         </el-menu-item>
       </app-link>
     </template>
-
+    <!-- 如果存在 children 渲染一级 -->
+    <!-- 一级菜单 -->
     <el-submenu v-else ref="subMenu" :index="resolvePath(item.path)" popper-append-to-body>
       <template slot="title">
         <item v-if="item.meta" :icon="item.meta && item.meta.icon" :title="item.meta.title" />
@@ -36,7 +45,7 @@ export default {
   components: { Item, AppLink },
   mixins: [FixiOSBug],
   props: {
-    // route object
+    // 路由对象
     item: {
       type: Object,
       required: true

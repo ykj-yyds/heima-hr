@@ -5,6 +5,7 @@
     transition: margin-left .28s;
     margin-left: $sideBarWidth;
     position: relative;
+    background-color: #f0f2f5;
   }
 
   .sidebar-container {
@@ -93,6 +94,18 @@
           }
         }
       }
+      // 添加以下样式
+  .is-active {
+    background-color: $menuText !important;
+      
+    span{
+      color: $menuActiveText !important;
+    }
+      
+    .svg-icon{
+      color: $menuActiveText !important;
+    }
+  }
     }
 
     // menu hover

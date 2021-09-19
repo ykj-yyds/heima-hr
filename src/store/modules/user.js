@@ -41,9 +41,9 @@ const actions = {
   // 获取用户信息
   async  getUserInfo(context) {
     const res = await getUserInfo()
-    console.log(res)
+    // console.log(res)
     const resp = await getUserDetailById(res.data.userId)
-    console.log(resp)
+    // console.log(resp)
     context.commit('setUserInfo', { ...res.data, ...resp.data })
   },
   // 退出功能

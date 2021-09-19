@@ -115,3 +115,30 @@ export function param2Obj(url) {
   })
   return obj
 }
+
+/**
+ * @description 将列表型数据转换成属性数据
+ * @param {*} list 需要遍历的数据
+ * @param {*} rootValue 一级元素 id
+ */
+export function tranListToTreeData(list, rootValue) {
+  const treeData = []
+
+  list.forEach(item => {
+    // 判断 pid 是不是 1 级
+    if (item.pid === rootValue) {
+      // 如果是 1 级，判断是否存在自己分类
+      // 怎么判断 ？
+      // 判断 id 和 pid 是否一致，所以这时候传递当前这一项的 id，然后进行递归循环
+      const children = tranListToTreeData(list, item.id)
+
+      if (children.length) {
+        item.children = children
+      }
+
+      treeData.push(item)
+    }
+  })
+
+  return treeData
+}

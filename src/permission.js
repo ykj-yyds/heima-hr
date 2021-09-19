@@ -2,6 +2,8 @@ import router from '@/router'
 import store from '@/store'
 import NProgress from 'nprogress' // 进度条插件
 import 'nprogress/nprogress.css' // 进度条插件 style
+
+import getPageTitle from '@/utils/get-page-title'
 // 不需要token的白名单
 const whiteList = ['/login', '/404']
 
@@ -34,7 +36,11 @@ router.beforeEach(async(to, from, next) => {
   // 关闭进度条
   NProgress.done()
 })
-
+// 路由前置守卫 设置网页标题
+router.beforeEach((to, from, next) => {
+  document.title = getPageTitle(to.meta.title)
+  next()
+})
 // 路由后置守卫
 router.afterEach((to, from) => {
   // 关闭进度条

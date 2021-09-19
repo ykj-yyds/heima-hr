@@ -14,8 +14,11 @@
 .el-upload__input {
   display: none;
 }
-
-
+//覆盖tree的行高和字体大小
+.el-tree-node__content {
+  height: 30px !important;
+  font-size: 14px !important;
+}
 // to fixed https://github.com/ElemeFE/element/issues/2461
 .el-dialog {
   transform: none;

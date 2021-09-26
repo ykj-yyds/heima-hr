@@ -10,7 +10,8 @@
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <!-- 使用vuex映射函数渲染用户头像 -->
-          <img :src="avatar" class="user-avatar">
+          <!-- <img :src="avatar" class="user-avatar"> -->
+          <image-holder :src="avatar" class="user-avatar" />
           <!-- 使用vuex映射函数渲染用户名 -->
           <span class="name">{{ name }}</span>
           <i class="el-icon-caret-bottom" style="color:#fff" />
@@ -150,6 +151,7 @@ export default {
     border-radius: 15px;
     vertical-align: middle;
     margin-right: 10px;
+    margin-top: 10px;
   }
 
   // name

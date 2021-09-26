@@ -15,7 +15,12 @@
         <el-table border :data="employeesList" :default-sort="{prop: 'date', order: 'descending'}">
           <el-table-column type="index" label="序号" />
           <el-table-column prop="username" label="姓名" />
-          <el-table-column prop="staffPhoto" label="头像" />
+          <el-table-column prop="staffPhoto" label="头像">
+            <template slot-scope="scope">
+              <!-- <img :src="scope.row.staffPhoto" class="staffPhoto"> -->
+              <image-holder :src="scope.row.staffPhoto" class="staffPhoto" />
+            </template>
+          </el-table-column>
           <el-table-column prop="mobile" label="手机号" />
           <el-table-column prop="workNumber" label="工号" />
           <el-table-column prop="formOfEmployment" label="聘用形式" :formatter="formatter" />
@@ -33,7 +38,7 @@
           <el-table-column label="操作" width="200">
             <template slot-scope="scope">
               <el-button type="text" size="small" @click="$router.push('/employees/detail?id=' + scope.row.id)">查看</el-button>
-              <el-button type="text" size="small">分配角色</el-button>
+              <el-button type="text" size="small" @click="setEmp(scope.row.id)">分配角色</el-button>
               <el-button type="text" size="small" @click="delEmp(scope.row.id)">删除</el-button>
             </template>
           </el-table-column>
@@ -56,6 +61,14 @@
         <el-dialog title="新增员工" :visible.sync="showDialog" @close="dialogClose">
           <emp-dialog ref="addEmp" @close="showDialog = false" @addCancel="addCancelFn" />
         </el-dialog>
+        <el-dialog
+          title="分配角色"
+          :visible.sync="showRoleDialog"
+          width="50%"
+        >
+          <assign-role v-if="showRoleDialog" :user-id="userId" @close="showRoleDialog = false" />
+        </el-dialog>
+
       </el-card>
     </div>
   </div>
@@ -70,11 +83,13 @@ import EmpDialog from './empDialog'
 // 导入格式化时间的插件
 import dayjs from 'dayjs'
 
+import assignRole from './assignRole.vue'
 export default {
   name: 'Employees',
 
   components: {
-    EmpDialog
+    EmpDialog,
+    assignRole
   },
   // 过滤器
   filters: {
@@ -92,7 +107,9 @@ export default {
       },
       employeesList: [], // 员工列表
       total: 0, // 数据总条数
-      showDialog: false // 添加员工组件的展示
+      showDialog: false, // 添加员工组件的展示
+      showRoleDialog: false, // 分配权限弹窗展示隐藏
+      userId: '' // 员工id
     }
   },
 
@@ -102,6 +119,12 @@ export default {
   },
 
   methods: {
+    // 分配权限按钮
+    setEmp(id) {
+      this.showRoleDialog = true
+      this.userId = id
+    },
+
     // 导出 Excel
     downloadExcel() {
       import('@/vendor/Export2Excel').then(async excel => {
@@ -120,6 +143,8 @@ export default {
         })
       })
     },
+
+    // 处理表格需要的数据
     transData(data) {
       // 枚举需要的数据
       const map = {
@@ -151,6 +176,7 @@ export default {
         results
       }
     },
+
     // 弹窗关闭获取子组件实例调用子组件方法
     dialogClose() {
       this.$refs.addEmp.closeDialog()
@@ -218,4 +244,10 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.staffPhoto {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+</style>

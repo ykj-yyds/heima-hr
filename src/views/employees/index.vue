@@ -6,8 +6,8 @@
           <span>共 {{ total }} 条记录</span>
         </template>
         <template #slot-right>
-          <el-button type="danger" size="small" @click="$router.push('/excel')">导入excel</el-button>
-          <el-button type="success" size="small" @click="downloadExcel">导出excel</el-button>
+          <el-button v-power="'import'" type="danger" size="small" @click="$router.push('/excel')">导入excel</el-button>
+          <el-button v-power="'export'" type="success" size="small" @click="downloadExcel">导出excel</el-button>
           <el-button type="primary" size="small" @click="showDialog = true">新增员工</el-button>
         </template>
       </PageTools>

@@ -31,7 +31,9 @@ export default {
       'sidebar'
     ]),
     routes() {
-      return this.$router.options.routes
+      // return this.$router.options.routes
+      // 从vuex中获取路由进行渲染
+      return this.$store.state.permission.routes
     },
     activeMenu() {
       const route = this.$route

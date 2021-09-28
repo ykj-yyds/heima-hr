@@ -144,14 +144,14 @@ export default {
   position: relative;
 
   // 头像
-  .user-avatar {
+  ::v-deep .user-avatar {
     cursor: pointer;
     width: 30px;
     height: 30px;
     border-radius: 15px;
     vertical-align: middle;
     margin-right: 10px;
-    margin-top: 10px;
+
   }
 
   // name

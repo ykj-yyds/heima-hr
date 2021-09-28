@@ -5,7 +5,7 @@ export default {
   path: '/social', // 路径
   component: Layout, // 组件
   children: [{
-    name: 'social', // 给路由规则加一个name
+    name: 'social_securitys', // 给路由规则加一个name
     path: '', // 这里当二级路由的path什么都不写的时候 表示当前路由为默认路由直接渲染对应组件
     component: () => import('@/views/social/index.vue'),
     // 路由元信息  其实就是存储数据的对象 我们可以在这里放置一些信息

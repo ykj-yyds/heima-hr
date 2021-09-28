@@ -22,7 +22,7 @@
               <el-table-column label="描述" prop="description" />
               <el-table-column label="操作">
                 <template slot-scope="scope">
-                  <el-button size="small" type="success" @click="setRoles(scope.row)">分配权限</el-button>
+                  <el-button size="small" type="success" @click="setRoles(scope.row.id)">分配权限</el-button>
                   <el-button size="small" type="primary" @click="editRoles(scope.row.id)">编辑</el-button>
                   <el-button size="small" type="danger" @click="delRoles(scope.row.id)">删除</el-button>
                 </template>
@@ -88,6 +88,15 @@
             </el-col>
           </el-row>
         </el-dialog>
+
+        <!-- 分配权限弹框 -->
+        <el-dialog
+          title="分配权限"
+          :visible.sync="dialogVisible"
+          width="50%"
+        >
+          <assign-permission v-if="dialogVisible" :role-id="roleId" @close="dialogVisible=false" />
+        </el-dialog>
       </el-card>
     </div>
   </div>
@@ -103,8 +112,12 @@ import {
   deleteRole
 } from '@/api/setting'
 import { mapGetters } from 'vuex'
+import AssignPermission from './assignPermission.vue'
 export default {
   name: 'Setting',
+  components: {
+    AssignPermission
+  },
   data() {
     return {
       activeName: 'first',
@@ -129,7 +142,9 @@ export default {
           { required: true, message: '角色描述不能为空', trigger: 'blur' }
         ]
       },
-      isEdit: false // 是否是编辑
+      isEdit: false, // 是否是编辑
+      dialogVisible: false, // 是否展示分配权限弹框
+      roleId: '' // 父传子id
     }
   },
 
@@ -219,8 +234,13 @@ export default {
       this.getRoles()
     },
 
-    // 设置角色
-    setRoles() {},
+    // 分配权限
+    setRoles(id) {
+      // 显示弹窗
+      this.dialogVisible = true
+      // 保存id
+      this.roleId = id
+    },
 
     // 编辑角色
     async  editRoles(id) {

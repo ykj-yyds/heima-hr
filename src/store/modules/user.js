@@ -1,6 +1,8 @@
 // 引入已经封装好的操作token的方法
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { login, getUserInfo, getUserDetailById } from '@/api/user'
+// 导入重置路由方法
+import { resetRouter } from '@/router'
 const state = {
   // 调用获取token的方法
   token: getToken() || null,
@@ -45,6 +47,7 @@ const actions = {
     const resp = await getUserDetailById(res.data.userId)
     // console.log(resp)
     context.commit('setUserInfo', { ...res.data, ...resp.data })
+    return res.data.roles.menus
   },
   // 退出功能
   userLogout(context) {
@@ -53,6 +56,9 @@ const actions = {
 
     // 移除 userInfo
     context.commit('removeUserInfo')
+
+    // 调用重置路由方法
+    resetRouter()
   }
 }
 

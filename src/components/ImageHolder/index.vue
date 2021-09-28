@@ -1,11 +1,9 @@
 <template>
-  <div>
-    <el-image :src="src" class="img-container">
-      <div slot="error">
-        <img src="@/assets/common/head.jpg" alt="默认图片">
-      </div>
-    </el-image>
-  </div>
+  <el-image :src="src" class="img-container">
+    <template slot="error">
+      <img src="@/assets/common/head.jpg" alt="默认图片">
+    </template>
+  </el-image>
 </template>
 
 <script>
@@ -23,6 +21,8 @@ export default {
 <style scoped lang="scss">
 .img-container {
   border-radius: 50%;
+  // width: 100px;
+  // height: 100px;
 
   img {
     width: 100%;

@@ -17,7 +17,7 @@
             <template slot-scope="scope">
               <el-button v-if="scope.row.type === 1" type="text" @click="addPermission(2, scope.row.id)">添加</el-button>
               <el-button type="text" @click="editPerHander(scope.row.id)">编辑</el-button>
-              <el-button type="text">删除</el-button>
+              <el-button type="text" @click="delPermission(scope.row.id)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import { getPermissionList, addPermission, getPermissionDetail, updatePermission } from '@/api/Permission'
+import { getPermissionList, addPermission, getPermissionDetail, updatePermission, delPermission } from '@/api/Permission'
 import { tranListToTreeData } from '@/utils'
 export default {
   name: 'Permission',
@@ -116,6 +116,21 @@ export default {
   },
 
   methods: {
+    async  delPermission(id) {
+      const confirmRes = await this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).catch(err => err)
+      if (confirmRes === 'cancel') return this.$message.info('您取消了删除')
+      // 调用删除接口
+      const res = await delPermission(id)
+      // 给用户提示
+      this.$message.success(res.message)
+      // 重新获取列表
+      this.getPermissionList()
+    },
+
     // 添加\编辑权限
     addPermissionSubmit() {
       // 兜底验证

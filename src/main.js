@@ -15,9 +15,13 @@ import router from './router'
 import '@/icons' // icon
 import '@/permission' // permission control
 
-import component from '@/components' // 导入封装全局注册的js
+import component from '@/components' // 导入封装全局注册组件
+
+import directive from '@/directive' // 导入封装全局注册自定义指令
 
 Vue.use(component) // 挂载的是一个对象
+
+Vue.use(directive) // 挂载的是一个对象
 
 if (process.env.NODE_ENV === 'production') {
   const { mockXHR } = require('../mock')

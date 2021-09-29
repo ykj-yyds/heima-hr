@@ -11,6 +11,7 @@ import zhLocale from 'element-ui/lib/locale/lang/zh-CN' // 导入 Element 中文
 import customZh from './zh'
 // 引入自定义英文包
 import customEn from './en'
+
 Vue.use(VueI18n)
 
 // 创建国际化插件的实例
@@ -20,13 +21,13 @@ const i18n = new VueI18n({
   messages: {
     en: {
       ...enLocale,
-      ...customZh
+      ...customEn
 
     },
     zh: {
       ...zhLocale,
 
-      ...customEn
+      ...customZh
     }
   }
 })

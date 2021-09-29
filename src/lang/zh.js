@@ -1,6 +1,6 @@
 export default {
   route: {
-    companyName: '江苏传智播客教育科技股份有限公司',
+
     dashboard: '首页',
     manage: '后台管理',
     users: '用户管理',
@@ -75,6 +75,7 @@ export default {
     'permissions': '权限管理' // 权限管理
   },
   navbar: {
+    companyName: '江苏传智播客教育科技股份有限公司',
     search: '站内搜索',
     logOut: '退出登录',
     dashboard: '首页',

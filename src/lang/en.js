@@ -1,6 +1,6 @@
 export default {
   route: {
-    companyName: 'Jiangsu Chuanzhi podcast Education Technology Co., Ltd',
+
     dashboard: 'Dashboard',
     manage: 'manage',
     users: 'users',
@@ -77,6 +77,7 @@ export default {
 
   },
   navbar: {
+    companyName: 'Jiangsu Chuanzhi podcast Education Technology Co., Ltd',
     search: 'search',
     logOut: 'Log Out',
     dashboard: 'Dashboard',

@@ -38,10 +38,10 @@ export const constantRoutes = [
     hidden: true
   },
   {
-    path: '',
+    path: 'excel',
     component: Layout,
     children: [{
-      path: 'excel',
+      path: '',
       name: 'Excel',
       component: () => import('@/views/excel'),
       hidden: true
@@ -53,9 +53,9 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/dashboard',
     children: [{
-      path: 'dashboard',
+      path: '',
       name: 'Dashboard',
-      component: () => import('@/views/dashboard/index'),
+      component: () => import('@/views/dashboard'),
       meta: { title: 'Dashboard', icon: 'dashboard' }
     }]
   }

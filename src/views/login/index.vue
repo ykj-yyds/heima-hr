@@ -139,7 +139,9 @@ export default {
         // this.setToken(res.data)
         // 请求之前让loading展示
         this.loading = true
-        await this.userLogin(this.loginForm)
+        await this.userLogin(this.loginForm).catch(() => {
+          this.loading = false
+        })
         // 请求完成把loading置为原始值
         this.loading = false
         // 登录完成 看是否有拼接的路径如果有就跳转之前 如果没有就跳转主页

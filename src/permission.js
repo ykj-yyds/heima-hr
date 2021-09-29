@@ -48,6 +48,7 @@ router.beforeEach(async(to, from, next) => {
 
         // 处理边界问题  获取所有路由对象里的路由路径组成一个数组
         const allpath = store.state.permission.routes.map(item => item.path)
+        console.log(allpath)
         // 解决刷新出现的白屏bug
         // 大家可以这样理解：
         // 之前并没有这些路由，通过 addRoutes 添加后才有了路由，

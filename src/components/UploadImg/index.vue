@@ -19,8 +19,8 @@ const COS = require('cos-js-sdk-v5')
 
 // SECRETID 和 SECRETKEY 秘钥配置
 const cos = new COS({
-  SecretId: 'AKIDBBvPcbJlvoQmqd9PN4UdV6QUIp69wTji',
-  SecretKey: 'jCOJxKRHqADySfcHfmdDVWHlyNVNyIL8'
+  SecretId: '',
+  SecretKey: ''
 })
 export default {
   name: 'UploadImg',
